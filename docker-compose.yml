@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+    rabbit:
+        image: rabbitmq:3-management
+        container_name: rabbit
+        build:
+          content: ./rabbit
+          #dockerfile: Dockerfile
+        ports:
+          - "5672:5672"
