@@ -1,6 +1,8 @@
 {
   "name": "OBSE",
   "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
   "description": "OBSE server",
   "author": "Markus Palomäki",
   "main": "server_obse.js",

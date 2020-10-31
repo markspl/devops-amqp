@@ -1,6 +1,8 @@
 {
   "name": "IMED",
   "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
   "description": "IMED server",
   "author": "Markus Palomäki",
   "main": "server_imed.js",

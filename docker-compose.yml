@@ -1,32 +1,21 @@
 version: "3"
 
 services:
+  # ========== RABBITMQ
   rabbit:
     image: rabbitmq:latest
-    container_name: rabbitmq
-    #build: ./rabbitmq
-    #build:
-      #content: ./rabbit
-      #dockerfile: Dockerfile
+    container_name: RABBITMQ
     ports:
       - "5672:5672"
       - "15672:15672"
-    #healthcheck:
-    #    test: ["CMD", "curl", "-f", "http://localhost:15672"]
-    #    interval: 10s
-    #    timeout: 10s
-    #    retries: 5
 
+  # ========== ORIG
+  # Publishes 3 messages to topic my.o
   orig:
     container_name: ORIG
     build: ./orig
     environment:
       - RABBIT_HOST=amqp://rabbit
-    #deploy:
-    #  restart_policy:
-    #    condition: on-failure
-    #    delay: 10s
-    #    max_attempts: 3
     depends_on:
       - rabbit
       - imed
@@ -35,16 +24,14 @@ services:
     links:
       - rabbit
 
+  # ========== IMED
+  # Receives message from topic my.o
+  # Publishes new message to topic my.i
   imed:
     container_name: IMED
     build: ./imed
     environment:
       - RABBIT_HOST=amqp://rabbit
-    #deploy:
-    #  restart_policy:
-    #    condition: on-failure
-    #    delay: 10s
-    #    max_attempts: 5
     depends_on:
       - rabbit
       - obse
@@ -52,16 +39,14 @@ services:
     links:
       - rabbit
 
+  # ========== OBSE
+  # Receives message from any topic
+  # Writes received messages into output file
   obse:
     container_name: OBSE
     build: ./obse
     environment:
       - RABBIT_HOST=amqp://rabbit
-    #deploy:
-    #  restart_policy:
-    #    condition: on-failure
-    #    delay: 10s
-    #    max_attempts: 5
     depends_on:
       - rabbit
     restart: on-failure:10
@@ -72,6 +57,8 @@ services:
     volumes:
       - output_data:/output_data
 
+  # ========== HTTPSERV
+  # Will show the output file on localhost:8080
   httpserv:
     container_name: HTTPSERV
     build: ./httpserv
@@ -79,8 +66,7 @@ services:
       - "8080:8080"
     volumes:
       - output_data:/output_data:ro
-    depends_on:
-      - obse
 
 volumes:
+  # To share the output file between OBSE and HTTPSERV
   output_data:
