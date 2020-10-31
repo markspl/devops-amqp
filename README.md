@@ -43,6 +43,16 @@ to send new three messages.
 stores the file into shared volume `data_output`, which is shared with application
 `HTTPSERV`. If `OBSE` is restarted, the file will be cleared.
 
+When Docker Compose will be launched, every container starts at the same time.
+Because RabbitMQ takes some time to fully launch, other applications can't connect
+to it so the applications will crash. Because of this, the containers will restart
+automatically with properties of `docker-compose.yml`. Containers will restart
+max 10 times before closing. With this, RabbitMQ will be working fully before sending
+the first message.
+
+If one of the containers are rebuilt, with `depends_on` values it will restart other
+necessary containers.
+
 As materials I mostly used [RabbitMQ's tutorials](https://www.rabbitmq.com/tutorials/tutorial-one-javascript.html).
 
 ### How-To
