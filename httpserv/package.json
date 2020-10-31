@@ -6,8 +6,5 @@
   "main": "server_httpserv.js",
   "scripts": {
     "start": "node server_httpserv.js"
-  },
-  "dependencies": {
-    "amqplib": "^0.6.0"
   }
 }

@@ -10,7 +10,7 @@ amqp.connect('amqp://rabbit', function(error0, connection) {
             throw error1;
         }
 
-        const path = "./output"
+        const path = "/output_data/output"
 
         try{
           if(fs.existsSync(path)){

@@ -2,20 +2,20 @@ version: "3"
 
 services:
   rabbit:
-    #image: rabbitmq:latest
+    image: rabbitmq:latest
     container_name: rabbitmq
-    build: ./rabbitmq
+    #build: ./rabbitmq
     #build:
       #content: ./rabbit
       #dockerfile: Dockerfile
     ports:
       - "5672:5672"
       - "15672:15672"
-    healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:15672"]
-        interval: 10s
-        timeout: 10s
-        retries: 5
+    #healthcheck:
+    #    test: ["CMD", "curl", "-f", "http://localhost:15672"]
+    #    interval: 10s
+    #    timeout: 10s
+    #    retries: 5
 
   orig:
     container_name: ORIG
@@ -67,8 +67,20 @@ services:
     restart: on-failure:10
     links:
       - rabbit
+    ports:
+      - "10010:9000"
+    volumes:
+      - output_data:/output_data
 
+  httpserv:
+    container_name: HTTPSERV
+    build: ./httpserv
+    ports:
+      - "8080:8080"
+    volumes:
+      - output_data:/output_data:ro
+    depends_on:
+      - obse
 
-  #httpserv:
-  #  container_name: HTTPSERV
-  #  build: ./httpserv 
+volumes:
+  output_data:
