@@ -28,9 +28,13 @@ amqp.connect('amqp://rabbit', function(error0, connection) {
           channel.consume(q.queue, function(msg){
             console.log(" [x] %s", msg.content.toString());
 
-            var message = "THIS IS FROM IMED!";
-            channel.publish(exchange, "my.i", Buffer.from(message));
-            console.log(" [x] Sent!")
+            var message = "Got " + msg.content.toString();
+
+            setTimeout(function(){
+              channel.publish(exchange, "my.i", Buffer.from(message));
+            }, 1000);
+
+            console.log(" [x] Sent %s!", message);
           },{
             noAck: true
           });
