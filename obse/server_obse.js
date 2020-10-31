@@ -25,9 +25,9 @@ amqp.connect('amqp://rabbit', function(error0, connection) {
 
           channel.bindQueue(q.queue, exchange, "#");
 
-          var now = new Date().toISOString();
-
           channel.consume(q.queue, function(msg){
+            let now = new Date().toISOString();
+
             console.log("%s Topic: %s: %s",
               now,
               msg.fields.routingKey,
