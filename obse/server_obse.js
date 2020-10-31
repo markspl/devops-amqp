@@ -40,7 +40,7 @@ amqp.connect("amqp://rabbit", function(error0, connection) {
         let now = new Date().toISOString();
 
         // Construct the message before writing
-        let text = now + " Topic: " + msg.fields.routingKey + " " + msg.content.toString();
+        let text = now + " Topic " + msg.fields.routingKey + " " + msg.content.toString();
         console.log(text);
 
         // WRITE with extra line end
