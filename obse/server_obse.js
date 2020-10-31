@@ -16,7 +16,9 @@ amqp.connect("amqp://rabbit", function(error0, connection) {
           if(err) throw err;
         });
       }
-    } catch(err) console.error(err);
+    } catch(err){
+      console.error(err);
+    }
 
     const exchange = "message";
 
