@@ -1,4 +1,5 @@
 var amqp = require('amqplib/callback_api');
+var fs = require("fs");
 
 amqp.connect('amqp://rabbit', function(error0, connection) {
     if (error0) {
@@ -7,6 +8,19 @@ amqp.connect('amqp://rabbit', function(error0, connection) {
     connection.createChannel(function(error1, channel) {
         if (error1) {
             throw error1;
+        }
+
+        const path = "./output"
+
+        try{
+          if(fs.existsSync(path)){
+            fs.unlinkSync(path)
+            fs.writeFile(path, "", function(err){
+              if(err) throw err;
+            });
+          }
+        } catch(err){
+          console.error(err);
         }
 
         var exchange = "message";
@@ -28,11 +42,10 @@ amqp.connect('amqp://rabbit', function(error0, connection) {
           channel.consume(q.queue, function(msg){
             let now = new Date().toISOString();
 
-            console.log("%s Topic: %s: %s",
-              now,
-              msg.fields.routingKey,
-              msg.content.toString()
-            );
+            let text = now + " Topic: " + msg.fields.routingKey + " " + msg.content.toString();
+            console.log(text);
+
+            fs.appendFileSync(path, text + "\n");
           },{
             noAck: true
           });

@@ -1,0 +1,13 @@
+{
+  "name": "HTTPSERV",
+  "version": "1.0.0",
+  "description": "HTTPSERV server",
+  "author": "Markus Palomäki",
+  "main": "server_httpserv.js",
+  "scripts": {
+    "start": "node server_httpserv.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0"
+  }
+}

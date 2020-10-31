@@ -69,4 +69,6 @@ services:
       - rabbit
 
 
-  #HTTPSERV:
+  #httpserv:
+  #  container_name: HTTPSERV
+  #  build: ./httpserv 
