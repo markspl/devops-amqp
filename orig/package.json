@@ -1,0 +1,13 @@
+{
+  "name": "ORIG",
+  "version": "1.0.0",
+  "description": "ORIG server",
+  "author": "Markus Palomäki",
+  "main": "server_orig.js",
+  "scripts": {
+    "start": "node server_orig.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0"
+  }
+}

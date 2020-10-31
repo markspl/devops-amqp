@@ -1,0 +1,13 @@
+{
+  "name": "OBSE",
+  "version": "1.0.0",
+  "description": "OBSE server",
+  "author": "Markus Palomäki",
+  "main": "server_obse.js",
+  "scripts": {
+    "start": "node server_obse.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0"
+  }
+}

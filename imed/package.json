@@ -1,0 +1,13 @@
+{
+  "name": "IMED",
+  "version": "1.0.0",
+  "description": "IMED server",
+  "author": "Markus Palomäki",
+  "main": "server_imed.js",
+  "scripts": {
+    "start": "node server_imed.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.6.0"
+  }
+}

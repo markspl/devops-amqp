@@ -1,11 +1,60 @@
 version: "3"
 
 services:
-    rabbit:
-        image: rabbitmq:3-management
-        container_name: rabbit
-        build:
-          content: ./rabbit
-          #dockerfile: Dockerfile
-        ports:
-          - "5672:5672"
+  rabbit:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    #build:
+      #content: ./rabbit
+      #dockerfile: Dockerfile
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  orig:
+    container_name: ORIG
+    build: ./orig
+    environment:
+      - RABBIT_HOST=amqp://rabbit
+    #deploy:
+    #  restart_policy:
+    #    condition: on-failure
+    #    delay: 10s
+    #    max_attempts: 3
+    depends_on:
+      - rabbit
+      - imed
+    restart: on-failure:10
+
+  imed:
+    container_name: IMED
+    build: ./imed
+    environment:
+      - RABBIT_HOST=amqp://rabbit
+    #deploy:
+    #  restart_policy:
+    #    condition: on-failure
+    #    delay: 10s
+    #    max_attempts: 5
+    depends_on:
+      - rabbit
+    restart: on-failure:10
+
+  obse:
+    container_name: OBSE
+    build: ./obse
+    environment:
+      - RABBIT_HOST=amqp://rabbit
+    #deploy:
+    #  restart_policy:
+    #    condition: on-failure
+    #    delay: 10s
+    #    max_attempts: 5
+    depends_on:
+      - rabbit
+      - orig
+      - imed
+    restart: on-failure:10
+
+
+  #HTTPSERV:
